@@ -1,0 +1,190 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090817">
+  <meta name="description" content="The Lost Diary — an interactive mystery adventure.">
+  <title>The Lost Diary | A Mystery Adventure</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="The Lost Diary home">
+      <span class="brand-icon">✦</span> THE LOST DIARY
+    </a>
+    <div class="top-actions">
+      <span id="chapterLabel" class="chapter-label">PROLOGUE</span>
+      <button id="soundToggle" class="icon-button" type="button"
+        aria-label="Toggle sound" title="Toggle sound">♫ Sound: Off</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+
+    <!-- HOME SCREEN -->
+    <section id="homeScreen" class="screen active">
+      <div class="hero">
+        <div class="moon">☾</div>
+        <p class="eyebrow">AN INTERACTIVE MYSTERY</p>
+        <h1>The Lost<br><span>Diary</span></h1>
+        <p class="hero-subtitle">
+          One vanished writer. One abandoned mansion.
+          A secret someone died trying to hide.
+        </p>
+        <button id="startButton" class="primary-button" type="button">
+          Begin the mystery <span>→</span>
+        </button>
+        <button id="continueButton" class="secondary-button hidden"
+          type="button">Continue saved game</button>
+        <p class="small-note">A story shaped by your choices.</p>
+      </div>
+      <div class="home-bottom">
+        <span>✧ EXPLORE</span>
+        <span>✧ INVESTIGATE</span>
+        <span>✧ UNCOVER THE TRUTH</span>
+      </div>
+    </section>
+
+    <!-- GAME SCREEN -->
+    <section id="gameScreen" class="screen hidden">
+      <div class="game-heading">
+        <div>
+          <p id="chapterEyebrow" class="eyebrow">CHAPTER ONE</p>
+          <h2 id="sceneTitle">The Mysterious Letter</h2>
+        </div>
+        <div class="timer-card">
+          <span class="muted-label">TIME</span>
+          <strong id="timerDisplay">00:00</strong>
+        </div>
+      </div>
+
+      <div class="progress-track">
+        <div id="progressBar" class="progress-fill"></div>
+      </div>
+
+      <div class="story-card">
+        <div class="scene-symbol" id="sceneSymbol">✉</div>
+        <div id="storyText" class="story-text" aria-live="polite">
+          Your story begins here...
+        </div>
+      </div>
+
+      <div id="choiceArea" class="choice-area"></div>
+
+      <div id="puzzleArea" class="puzzle-card hidden">
+        <p class="eyebrow">A TEST OF YOUR WITS</p>
+        <h3 id="puzzleTitle">The Locked Drawer</h3>
+        <p id="puzzleQuestion"></p>
+        <form id="puzzleForm">
+          <label for="puzzleAnswer">Your answer</label>
+          <div class="answer-row">
+            <input id="puzzleAnswer" type="text"
+              placeholder="Enter your answer..." autocomplete="off"
+              required>
+            <button class="primary-button" type="submit">Unlock</button>
+          </div>
+        </form>
+        <p id="puzzleFeedback" class="feedback" aria-live="polite"></p>
+        <button id="hintButton" class="text-button" type="button">
+          ✧ Reveal a hint
+        </button>
+        <p id="hintText" class="hint-text hidden"></p>
+      </div>
+
+      <div class="game-tools">
+        <button id="evidenceButton" class="tool-button" type="button">
+          ◈ Evidence <span id="evidenceCount">0</span>
+        </button>
+        <button id="journalButton" class="tool-button" type="button">
+          ▤ Journal
+        </button>
+        <button id="saveButton" class="tool-button" type="button">
+          ♡ Save
+        </button>
+      </div>
+      <p id="statusMessage" class="status-message" aria-live="polite"></p>
+    </section>
+
+    <!-- EVIDENCE PANEL -->
+    <section id="evidenceScreen" class="screen hidden">
+      <button class="back-button" data-back="gameScreen" type="button">
+        ← Return to investigation
+      </button>
+      <p class="eyebrow">YOUR DISCOVERIES</p>
+      <h2>Evidence Board</h2>
+      <p class="muted">Every clue may reveal something important.</p>
+      <div id="evidenceList" class="collection-list"></div>
+      <div id="evidenceEmpty" class="empty-state">
+        <span>◇</span>
+        <p>No clues collected yet.</p>
+        <p>Explore the mansion to find evidence.</p>
+      </div>
+    </section>
+
+    <!-- JOURNAL PANEL -->
+    <section id="journalScreen" class="screen hidden">
+      <button class="back-button" data-back="gameScreen" type="button">
+        ← Return to investigation
+      </button>
+      <p class="eyebrow">YOUR CASE NOTES</p>
+      <h2>Investigation Journal</h2>
+      <div id="journalList" class="collection-list"></div>
+      <p id="journalEmpty" class="empty-state">
+        Your discoveries will appear here.
+      </p>
+    </section>
+
+    <!-- ENDING SCREEN -->
+    <section id="endingScreen" class="screen hidden">
+      <div class="ending-content">
+        <div class="ending-star">✧</div>
+        <p class="eyebrow">CASE CLOSED</p>
+        <h1 id="endingTitle">The Truth</h1>
+        <p id="endingText" class="hero-subtitle"></p>
+        <div class="score-panel">
+          <div>
+            <span class="muted-label">FINAL SCORE</span>
+            <strong id="finalScore">0</strong>
+          </div>
+          <div>
+            <span class="muted-label">EVIDENCE FOUND</span>
+            <strong id="finalEvidence">0</strong>
+          </div>
+          <div>
+            <span class="muted-label">TIME TAKEN</span>
+            <strong id="finalTime">00:00</strong>
+          </div>
+        </div>
+        <button id="playAgainButton" class="primary-button" type="button">
+          Play again ↻
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Accessible message dialog -->
+  <dialog id="messageDialog" class="message-dialog">
+    <div class="dialog-content">
+      <p class="eyebrow">THE LOST DIARY</p>
+      <h3 id="dialogTitle">A message</h3>
+      <p id="dialogText"></p>
+      <button id="dialogClose" class="primary-button" type="button">
+        Continue
+      </button>
+    </div>
+  </dialog>
+
+  <footer class="footer">
+    <span>THE LOST DIARY</span>
+    <span>Some secrets are better left buried.</span>
+  </footer>
+</body>
+</html>
+```
